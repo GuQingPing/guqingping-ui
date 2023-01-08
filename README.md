@@ -1,6 +1,6 @@
 # guqingping-ui
 It's a temp for learn how to build a ui library, Do not install it Thanks<br>
-[Document](guqingping.github.io/guqingping-ui/)
+[Document](https://guqingping.github.io/guqingping-ui/)
 
 ## Install
 ```sh
