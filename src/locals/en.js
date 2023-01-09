@@ -1,4 +1,0 @@
-// en.js
-export default {
-
-}

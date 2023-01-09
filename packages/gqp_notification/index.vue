@@ -46,6 +46,7 @@ export default { name: "gqp_notification" }
   width: 100%;
   height: 100%;
   text-align: center;
+  z-index: 1000;
 
   [text] {
     position: absolute;
@@ -58,7 +59,7 @@ export default { name: "gqp_notification" }
     color: #fff;
     font-size: 1.6rem;
     padding: .2em 1em;
-    z-index: 10;
+    z-index: 1002;
     border-radius: .2rem;
   }
 
@@ -71,7 +72,7 @@ export default { name: "gqp_notification" }
     width: 100%;
     height: 100%;
     background: rgba(0, 0, 0, .3);
-    z-index: 9;
+    z-index: 1001;
   }
 
   &.show {

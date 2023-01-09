@@ -1,19 +1,32 @@
 {
-  "hash": "9858047c",
-  "browserHash": "049fbcec",
+  "hash": "3ad630a9",
+  "browserHash": "f6cfd74b",
   "optimized": {
     "vue": {
       "src": "../../../../node_modules/vue/dist/vue.runtime.esm-bundler.js",
       "file": "vue.js",
-      "fileHash": "bc34f1f5",
+      "fileHash": "c26724cc",
       "needsInterop": false
     },
     "@theme/index": {
       "src": "../../../../node_modules/vitepress/dist/client/theme-default/index.js",
       "file": "@theme_index.js",
-      "fileHash": "7eb61652",
+      "fileHash": "19c8672f",
       "needsInterop": false
+    },
+    "guqingping-ui": {
+      "src": "../../../../node_modules/guqingping-ui/dist/guqingping-ui.umd.js",
+      "file": "guqingping-ui.js",
+      "fileHash": "2dcfe07a",
+      "needsInterop": true
     }
   },
-  "chunks": {}
+  "chunks": {
+    "chunk-FFOKMZK7": {
+      "file": "chunk-FFOKMZK7.js"
+    },
+    "chunk-OL3AADLO": {
+      "file": "chunk-OL3AADLO.js"
+    }
+  }
 }
