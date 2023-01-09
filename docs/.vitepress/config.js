@@ -46,6 +46,7 @@ const markdown = {
 }
 
 module.exports = {
+  base: "guqingping-ui",
   title: 'GuQingPing UI',
   description: 'Just playing around.',
   lang: 'en-US',
