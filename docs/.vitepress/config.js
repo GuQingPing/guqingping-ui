@@ -1,6 +1,6 @@
 const nav = [
   { text: '指南', link: '/guide/' },
-  { text: '组件', link: '/components/notification/index' },
+  { text: '组件', link: '/components/gqp_notification/index' },
   { text: 'GitHub', link: 'https://github.com/GuQingPing/guqingping-ui', },
 ]
 const sidebar = {
@@ -14,9 +14,10 @@ const sidebar = {
   ],
   '/components': [
     {
-      text: '通知与提示',
+      text: '目前的所有组件',
       items: [
-        { text: '通知', link: '/components/notification/index' }
+        { text: 'gqp_nav 导航栏', link: '/components/gqp_nav/index' },
+        { text: 'gqp_notification 通知', link: '/components/gqp_notification/index' },
       ]
     },
     {

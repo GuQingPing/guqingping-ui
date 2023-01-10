@@ -1,32 +1,29 @@
 {
-  "hash": "3ad630a9",
-  "browserHash": "f6cfd74b",
+  "hash": "74cbb34d",
+  "browserHash": "590fe167",
   "optimized": {
     "vue": {
       "src": "../../../../node_modules/vue/dist/vue.runtime.esm-bundler.js",
       "file": "vue.js",
-      "fileHash": "c26724cc",
+      "fileHash": "337574de",
       "needsInterop": false
     },
-    "@theme/index": {
-      "src": "../../../../node_modules/vitepress/dist/client/theme-default/index.js",
-      "file": "@theme_index.js",
-      "fileHash": "19c8672f",
+    "element-plus": {
+      "src": "../../../../node_modules/element-plus/es/index.mjs",
+      "file": "element-plus.js",
+      "fileHash": "2789accf",
       "needsInterop": false
     },
     "guqingping-ui": {
       "src": "../../../../node_modules/guqingping-ui/dist/guqingping-ui.umd.js",
       "file": "guqingping-ui.js",
-      "fileHash": "2dcfe07a",
+      "fileHash": "f3f850d0",
       "needsInterop": true
     }
   },
   "chunks": {
-    "chunk-FFOKMZK7": {
-      "file": "chunk-FFOKMZK7.js"
-    },
-    "chunk-OL3AADLO": {
-      "file": "chunk-OL3AADLO.js"
+    "chunk-477MA6DD": {
+      "file": "chunk-477MA6DD.js"
     }
   }
 }

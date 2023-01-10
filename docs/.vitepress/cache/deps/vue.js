@@ -19,7 +19,7 @@ import {
   cloneVNode,
   compatUtils,
   compile,
-  computed,
+  computed2 as computed,
   createApp,
   createBaseVNode,
   createBlock,
@@ -145,8 +145,7 @@ import {
   withMemo,
   withModifiers,
   withScopeId
-} from "./chunk-FFOKMZK7.js";
-import "./chunk-OL3AADLO.js";
+} from "./chunk-477MA6DD.js";
 init_vue_runtime_esm_bundler();
 export {
   BaseTransition,

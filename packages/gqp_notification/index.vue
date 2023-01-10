@@ -27,18 +27,20 @@ defineExpose({ notification })
 export default { name: "gqp_notification" }
 </script>
 <template>
-  <Teleport to="body">
-    <div box :class="[notification_obj.show ? 'show' : 'hide', notification_obj.init ? 'init' : '']">
-      <div text>
-        {{ notification_obj.text }}
-      </div>
-      <div cover></div>
+  <!-- <Teleport to="body"> -->
+  <div :class="[true ? 'gqp_notification_box' : '', notification_obj.show ? 'show' : 'hide', notification_obj.init ? 'init' : ''
+  ]">
+    <div text>
+      {{ notification_obj.text }}
     </div>
-  </Teleport>
+    <div cover></div>
+  </div>
+  <!-- </Teleport> -->
 </template>
 
+
 <style lang="scss" scoped>
-[box] {
+.gqp_notification_box {
   --time: 0.3;
   position: fixed;
   left: 0;
@@ -58,9 +60,27 @@ export default { name: "gqp_notification" }
     background: #131722;
     color: #fff;
     font-size: 1.6rem;
-    padding: .2em 1em;
+    padding: 2rem 2rem;
     z-index: 1002;
     border-radius: .2rem;
+  }
+
+  @media only screen and (max-width:1023px) {
+    [text] {
+      min-width: 50%;
+    }
+  }
+
+  @media only screen and (max-width:769px) {
+    [text] {
+      min-width: 70%;
+    }
+  }
+
+  @media only screen and (max-width:461px) {
+    [text] {
+      min-width: 90%;
+    }
   }
 
   [cover] {
@@ -104,7 +124,7 @@ export default { name: "gqp_notification" }
       opacity: 1;
     }
 
-    99.99% {
+    99.999% {
       opacity: 0;
     }
 

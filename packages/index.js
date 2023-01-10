@@ -1,13 +1,18 @@
-import gqp_notification from "./gqp_notification/index.js";
+import gqp_notification from "./gqp_notification";
+import gqp_nav from "./gqp_nav"
 
-const uses = [
+const components = [
   gqp_notification,
+  gqp_nav
 ]
-
-const install = (app) => uses.forEach(x => app.use(x))
-const UI = { install }
+const install = function (app) {
+  if (install.installed) return
+  components.forEach((x) => app.use(x))
+}
 
 export {
-  gqp_notification
+  gqp_notification,
+  gqp_nav
 }
-export default UI;
+
+export default install
