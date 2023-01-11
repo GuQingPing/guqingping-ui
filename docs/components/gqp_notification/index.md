@@ -50,7 +50,7 @@ onMounted(() => {
 </script>
 <template>
   <gqp_notification ref="gqp_notification_ref">
-    <div box>
+    <div box padding>
       <svg t="1673427792638" class="icon" viewBox="0 0 1104 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
         p-id="2707" width="200" height="200">
         <path
@@ -68,8 +68,6 @@ onMounted(() => {
 </template>
 <style>
 [box] {
-  margin: -2rem -2rem;
-  padding: 2rem 2rem;
   display: flex;
   align-items: center;
   color: rgb(0, 0, 0);
