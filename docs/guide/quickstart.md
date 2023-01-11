@@ -1,7 +1,7 @@
-
 ## ES Modules
-### Import on full
+### 全部导入
 ```js
+//main.js
 import App from './App.vue'
 const app = createApp(App)
 
@@ -12,7 +12,14 @@ app.use(guqingping_ui)                        //注册组件库
 app.mount('#app')
 ```
 
-### Import on demand
+### 解构导入
 ```js
+//main.js
+import "guqingping-ui/css"                    //导入(全部)样式
+```
+```js
+//component.vue
 import { gqp_notification } from "guqingping-ui"//导入组件库但只暴露一部分
 ```
+
+## 未测试script导入

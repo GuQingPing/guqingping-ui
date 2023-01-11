@@ -8,7 +8,7 @@ onMounted(() => {
 </script>
 <template>
   <gqp_notification ref="gqp_notification_ref">
-    <div box padding>
+    <div text custom_1>
       <svg t="1673427792638" class="icon" viewBox="0 0 1104 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
         p-id="2707" width="200" height="200">
         <path
@@ -24,8 +24,8 @@ onMounted(() => {
   <div @click="notification({ text: '插槽文本优先级更高', time: -1, closeable: true })">
     Click to show notification</div>
 </template>
-<style>
-[box] {
+<style scoped>
+[text][custom_1] {
   display: flex;
   align-items: center;
   color: rgb(0, 0, 0);
@@ -33,17 +33,17 @@ onMounted(() => {
 }
 
 svg {
-  width: 2rem;
-  height: 2rem;
+  width: 2em;
+  height: 2em;
   display: inline-block;
   margin: 0 .3em;
 }
 
 [cover][custom_1] {
-  background: rgba(255, 165, 0, .3) !important;
+  background: rgba(255, 165, 0, .3);
   color: #fff;
   font-size: 2rem;
-  line-height: 18;
+  line-height: 78vh;
   text-shadow: 0 0 calc(.2em + 0px) black;
 }
 </style>
