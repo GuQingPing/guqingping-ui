@@ -7,9 +7,9 @@ const notification_obj = ref({
   timer: null,
   default_config: {
     text: "请输入提示文本",
-    type: "normal",
+    closeable: false,
     time: 1.5,
-  }
+  },
 })
 let notification = function (params = notification_obj.value.default_config) {
   notification_obj.value.init = false
@@ -17,11 +17,18 @@ let notification = function (params = notification_obj.value.default_config) {
   notification_obj.value.text = params.text
   notification_obj.value.show = true
   if (notification_obj.value.timer) clearTimeout(notification_obj.value.timer)
+  if (params.time < 0) return // -1 不关闭
   notification_obj.value.timer = setTimeout(() => {
     notification_obj.value.show = false
   }, params.time * 1000)
 }
 defineExpose({ notification })
+let close = function () {
+  console.log("关闭", notification_obj.value.default_config.closeable)
+  if (!notification_obj.value.default_config.closeable) return
+  if (notification_obj.value.timer) clearTimeout(notification_obj.value.timer)
+  notification_obj.value.show = false
+}
 </script>
 <script>
 export default { name: "gqp_notification" }
@@ -29,11 +36,15 @@ export default { name: "gqp_notification" }
 <template>
   <!-- <Teleport to="body"> -->
   <div :class="[true ? 'gqp_notification_box' : '', notification_obj.show ? 'show' : 'hide', notification_obj.init ? 'init' : ''
-  ]">
+  ]" @click="close">
     <div text>
-      {{ notification_obj.text }}
+      <slot>
+        {{ notification_obj.text }}
+      </slot>
     </div>
-    <div cover></div>
+    <slot name="cover">
+      <div cover></div>
+    </slot>
   </div>
   <!-- </Teleport> -->
 </template>
@@ -63,6 +74,10 @@ export default { name: "gqp_notification" }
     padding: 2rem 2rem;
     z-index: 1002;
     border-radius: .2rem;
+    max-height: 90%;
+    overflow-y: auto;
+
+
   }
 
   @media only screen and (max-width:1023px) {
@@ -83,7 +98,13 @@ export default { name: "gqp_notification" }
     }
   }
 
-  [cover] {
+  :slotted([padding]) {
+    margin: -2rem -2rem;
+    padding: 2rem 2rem;
+  }
+
+  [cover],
+  :slotted([cover]) {
     content: '';
     display: block;
     position: absolute;

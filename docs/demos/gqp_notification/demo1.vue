@@ -8,5 +8,6 @@ onMounted(() => {
 </script>
 <template>
   <gqp_notification ref="gqp_notification_ref"></gqp_notification>
-  <div @click="notification({ text: 'a full screen notification' })">Click to show notification</div>
+  <div @click="notification({ text: 'a full screen notificationa' })">
+    Click to show notification</div>
 </template>
