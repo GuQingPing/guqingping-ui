@@ -6,8 +6,11 @@ const notification_obj = ref({
   show: false,
   init: true,
   timer: null,
+  timers: [],
   lists: [],
   list_model: false,
+  temp_index: 0,
+  trans_time: 0.2,
   position: "center",
   default_config: {
     text: "请输入提示文本",
@@ -19,9 +22,9 @@ const notification_obj = ref({
 })
 //位置九宫格
 const position_arr = [
-  "top_left",
-  "top_center",
-  "top_right",
+  "top_left reverse",
+  "top_center reverse",
+  "top_right reverse",
   "center_left",
   "center",
   "center_right",
@@ -29,46 +32,76 @@ const position_arr = [
   "bottom_center",
   "bottom_right",
 ]
+const NOV = notification_obj.value
 //通知方法
-let notification = function (params = notification_obj.value.default_config) {
-  notification_obj.value.init = false
-  params = Object.assign(notification_obj.value.default_config, params)//合并参数,传入默认值
-  notification_obj.value.show = true
+let notification = function (params = NOV.default_config) {
+  NOV.init = false
+  params = Object.assign(NOV.default_config, params)//合并参数,传入默认值
+  NOV.show = true
   switch (true) {//解析位置
     case params.position >= 1 && params.position <= 9:
-      notification_obj.value.position = position_arr[params.position - 1]
+      NOV.position = position_arr[params.position - 1]
       break
     default:
       console.error("传入非法位置", params.position, " from gqp_notification - notification()")
       break
   }
 
-  if (params.list) {//列表
-    notification_obj.value.list_model = true
-    notification_obj.value.lists.push(params.text)
-    if (params.time < 0) return // -1 不关闭
-    setTimeout(() => {
-      notification_obj.value.lists.shift()
-      if (notification_obj.value.lists.length === 0) notification_obj.value.show = false
-    }, params.time * 1000)
-  } else {//单条
-    notification_obj.value.list_model = false
-    notification_obj.value.lists = [params.text]
-    if (notification_obj.value.timer) clearTimeout(notification_obj.value.timer)
-    if (params.time < 0) return // -1 不关闭
-    notification_obj.value.timer = setTimeout(() => {
-      notification_obj.value.show = false
+  if (NOV.list_model = params.list) {//列表 添加
+    const now_index = NOV.temp_index / 1
+    const timeoutIndex = setTimeout(() => {
+      list_remove(now_index)
+    }, params.time < 0 ? 1000 : params.time * 1000)
+    NOV.lists.push({
+      index: NOV.temp_index++,
+      text: params.text,
+      closeable: params.closeable,
+      timeoutIndex,
+    })
+    if (params.time < 0) {
+      clearTimeout(timeoutIndex)
+      return
+    }
+    NOV.timers.push(timeoutIndex)
+  } else {//单条 覆盖
+    NOV.lists = [{
+      index: NOV.temp_index,
+      text: params.text
+    }]
+    if (NOV.timer) clearTimeout(NOV.timer)
+    if (params.time < 0) return
+    NOV.timer = setTimeout(() => {
+      NOV.show = false
     }, params.time * 1000)
   }
 }
 //关闭通知方法
 let close = function () {
-  if (!notification_obj.value.default_config.closeable || notification_obj.list_model) return
-  if (notification_obj.value.timer) clearTimeout(notification_obj.value.timer)
-  notification_obj.value.show = false
+  if (!NOV.default_config.closeable || NOV.list_model) return
+  if (NOV.timer) clearTimeout(NOV.timer)
+  NOV.show = false
+}
+//删除列表通知方法
+let list_remove = function (i) {
+  if (!NOV.list_model) return
+  const targetIndex = NOV.lists.findIndex(x => x.index === i)
+  if (targetIndex < 0) return
+  console.log("list_remove", i, NOV.list_model ? "list" : "single")
+  const target = NOV.lists[targetIndex]
+  if (target.closeable) {
+    clearTimeout(target.timeoutIndex)
+    NOV.lists.splice(targetIndex, 1)
+  }
+  check_arr()
+}
+//检查数组状态
+let check_arr = function () {
+  if (NOV.lists.length > 0) return
+  NOV.temp_index = 0
+  NOV.show = false
 }
 //暴露方法
-defineExpose({ notification, close })
+defineExpose({ notification, close, list_remove })
 //传参
 const props = defineProps({//带类型和默认值的写法
   type: {
@@ -88,11 +121,14 @@ export default { name: "gqp_notification" }
     notification_obj.show ? 'show' : 'hide',
     notification_obj.init ? 'init' : '',
     notification_obj.list_model ? 'list_box' : '',
-  ]" @click="close">
+  ]" @click="close" :style="'--time:' + notification_obj.trans_time + 's'">
 
     <div list>
       <slot>
-        <div text v-for="x in notification_obj.lists">{{ x }}</div>
+        <div text v-for="x in notification_obj.lists" :key="x.index" @click="list_remove(x.index)" :data-index="x.index"
+          :class="x.class || ''">
+          {{ x.text }}
+        </div>
       </slot>
     </div>
     <slot name="cover">
@@ -105,7 +141,6 @@ export default { name: "gqp_notification" }
 
 <style lang="scss" scoped>
 .gqp_notification_box {
-  --time: 0.2;
   position: fixed;
   width: 100%;
   height: 100%;
@@ -184,11 +219,11 @@ export default { name: "gqp_notification" }
   }
 
   &.show {
-    animation: show calc(var(--time) * 1s) both;
+    animation: show var(--time) both;
   }
 
   &.hide {
-    animation: hide calc(var(--time) * 1s) both;
+    animation: hide var(--time) both;
 
     &.init {
       animation: hide 0s both;
@@ -208,11 +243,37 @@ export default { name: "gqp_notification" }
       left: 0;
       top: 0;
       transform: none;
-      display: inline-block;
+      display: inline-flex;
+      flex-direction: column;
       z-index: 1002;
       border-radius: 0.2rem;
       max-height: 90%;
       overflow-y: auto;
+
+      &>[text] {
+        padding: .5rem 1rem;
+        font-size: 1rem;
+        overflow: hidden;
+        transform-origin: bottom;
+        border-radius: .3rem;
+        animation: grow var(--time);
+      }
+    }
+  }
+
+  &.reverse>[list] {
+    flex-direction: column-reverse;
+
+    [text] {
+      transform-origin: top;
+    }
+
+    [text]:first-child {
+      margin-bottom: 0;
+    }
+
+    [text]:last-child {
+      margin-bottom: .3rem;
     }
   }
 
@@ -291,6 +352,16 @@ export default { name: "gqp_notification" }
 
     100% {
       visibility: hidden;
+    }
+  }
+
+  @keyframes grow {
+    0% {
+      height: 0;
+    }
+
+    50% {
+      height: 2.5rem;
     }
   }
 }

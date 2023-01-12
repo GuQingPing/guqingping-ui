@@ -1,4 +1,5 @@
-import DefaultTheme from "vitepress/theme"    //不导入此项，白屏
+import DefaultTheme from "vitepress/theme"    //不导入此项，白屏 (这是vitepress的默认样式)
+import './custom.css'                         //导入自定义样式
 
 import guqingping_ui from '../../../packages' //导入项目当前组件库
 

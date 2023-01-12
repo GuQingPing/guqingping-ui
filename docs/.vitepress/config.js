@@ -43,9 +43,6 @@ const sidebar = {
   ]
 }
 
-const markdown = {
-}
-
 module.exports = {
   base: "/guqingping-ui",
   title: 'GuQingPing UI',
@@ -62,7 +59,6 @@ module.exports = {
     },
     nav,
     sidebar,
-    markdown,
     lastUpdated: true
   }
 }
