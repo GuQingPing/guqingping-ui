@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, toRaw } from 'vue'
 //状态对象
 const notification_obj = ref({
   text: "",
@@ -17,7 +17,8 @@ const notification_obj = ref({
     closeable: false,
     time: 1.5,
     position: 5,
-    list: false
+    list: false,
+    progress: false
   },
 })
 //位置九宫格
@@ -34,9 +35,9 @@ const position_arr = [
 ]
 const NOV = notification_obj.value
 //通知方法
-let notification = function (params = NOV.default_config) {
+let notification = function (params = toRaw(NOV.default_config)) {
   NOV.init = false
-  params = Object.assign(NOV.default_config, params)//合并参数,传入默认值
+  params = Object.assign(toRaw(NOV.default_config), params)//合并参数,传入默认值
   NOV.show = true
   switch (true) {//解析位置
     case params.position >= 1 && params.position <= 9:
@@ -54,9 +55,8 @@ let notification = function (params = NOV.default_config) {
     }, params.time < 0 ? 1000 : params.time * 1000)
     NOV.lists.push({
       index: NOV.temp_index++,
-      text: params.text,
-      closeable: params.closeable,
       timeoutIndex,
+      ...params,
     })
     if (params.time < 0) {
       clearTimeout(timeoutIndex)
@@ -65,12 +65,13 @@ let notification = function (params = NOV.default_config) {
     NOV.timers.push(timeoutIndex)
   } else {//单条 覆盖
     NOV.lists = [{
-      index: NOV.temp_index,
-      text: params.text
+      index: NOV.temp_index++,
+      ...params
     }]
     if (NOV.timer) clearTimeout(NOV.timer)
     if (params.time < 0) return
     NOV.timer = setTimeout(() => {
+      NOV.temp_index %= 2
       NOV.show = false
     }, params.time * 1000)
   }
@@ -86,13 +87,17 @@ let list_remove = function (i) {
   if (!NOV.list_model) return
   const targetIndex = NOV.lists.findIndex(x => x.index === i)
   if (targetIndex < 0) return
-  console.log("list_remove", i, NOV.list_model ? "list" : "single")
   const target = NOV.lists[targetIndex]
-  if (target.closeable) {
+  if (target.closeable && !target.closing) {
+    console.log("list_remove", i, NOV.list_model ? "list" : "single", NOV.lists)
     clearTimeout(target.timeoutIndex)
-    NOV.lists.splice(targetIndex, 1)
+    target.closing = true
+    document.querySelector(`.gqp_notification_box [text][data-index='${i}']`).classList.add("closing")
+    setTimeout(() => {
+      NOV.lists.splice(NOV.lists.findIndex(x => x.index === i), 1)
+      check_arr()
+    }, NOV.trans_time * 1000)
   }
-  check_arr()
 }
 //检查数组状态
 let check_arr = function () {
@@ -100,8 +105,13 @@ let check_arr = function () {
   NOV.temp_index = 0
   NOV.show = false
 }
+let clear = function () {
+  NOV = []
+  NOV.temp_index = 0
+  NOV.show = false
+}
 //暴露方法
-defineExpose({ notification, close, list_remove })
+defineExpose({ notification, close, list_remove, clear })
 //传参
 const props = defineProps({//带类型和默认值的写法
   type: {
@@ -114,28 +124,32 @@ const props = defineProps({//带类型和默认值的写法
 export default { name: "gqp_notification" }
 </script>
 <template>
-  <!-- <Teleport to="body"> -->
-  <div :class="[
-    true ? 'gqp_notification_box' : '',//基础样式
-    true ? notification_obj.position : '',//位置
-    notification_obj.show ? 'show' : 'hide',
-    notification_obj.init ? 'init' : '',
-    notification_obj.list_model ? 'list_box' : '',
-  ]" @click="close" :style="'--time:' + notification_obj.trans_time + 's'">
+  <Teleport to="body">
+    <div :class="[
+      true ? 'gqp_notification_box' : '',//基础样式
+      true ? notification_obj.position : '',//位置
+      notification_obj.show ? 'show' : 'hide',
+      notification_obj.init ? 'init' : '',
+      notification_obj.list_model ? 'list_box' : '',
+    ]" @click="close" :style="'--time:' + notification_obj.trans_time + 's'">
 
-    <div list>
-      <slot>
+      <div list>
         <div text v-for="x in notification_obj.lists" :key="x.index" @click="list_remove(x.index)" :data-index="x.index"
-          :class="x.class || ''">
-          {{ x.text }}
+          :class="[
+            x.closeable ? 'clickable' : '',
+            x.progress ? 'progress' : '',
+            $slots.default ? 'disable_default_style' : '',
+          ]" :style="'--progress_time:' + x.time + 's'">
+          <slot>
+            {{ x.text }}
+          </slot>
         </div>
+      </div>
+      <slot name="cover">
+        <div cover></div>
       </slot>
     </div>
-    <slot name="cover">
-      <div cover></div>
-    </slot>
-  </div>
-  <!-- </Teleport> -->
+  </Teleport>
 </template>
 
 
@@ -157,9 +171,9 @@ export default { name: "gqp_notification" }
     z-index: 1002;
     border-radius: .2rem;
     max-height: 90%;
-    overflow-y: auto;
 
     [text] {
+      position: relative;
       padding: 2rem 2rem;
       background: #131722;
       color: #fff;
@@ -169,6 +183,19 @@ export default { name: "gqp_notification" }
 
       &:last-child {
         margin-bottom: 0;
+      }
+
+      &.disable_default_style.disable_default_style {
+        padding: 0;
+        background: unset;
+      }
+
+      &.clickable {
+        cursor: pointer;
+
+        &:hover {
+          backdrop-filter: brightness(.9)
+        }
       }
     }
   }
@@ -230,13 +257,44 @@ export default { name: "gqp_notification" }
     }
   }
 
+  :not(.disable_default_style).progress::after {
+    content: '';
+    position: absolute;
+    bottom: 1px;
+    left: 0;
+    width: 100%;
+    height: .1em;
+    border-radius: inherit;
+    background: currentColor;
+    animation: countdown var(--progress_time) linear forwards;
+
+
+  }
+
+  .progress>:slotted([text])::after {
+    content: '';
+    position: absolute;
+    bottom: 1px;
+    left: 0;
+    width: 100%;
+    height: .1em;
+    border-radius: inherit;
+    background: currentColor;
+    animation: countdown var(--progress_time) linear forwards;
+
+  }
+
+  @keyframes countdown {
+    to {
+      width: 0
+    }
+  }
+
   &.list_box {
     position: fixed;
     display: flex;
     width: auto;
     height: auto;
-    overflow: hidden;
-    display: flex;
 
     &>[list] {
       position: relative;
@@ -248,15 +306,17 @@ export default { name: "gqp_notification" }
       z-index: 1002;
       border-radius: 0.2rem;
       max-height: 90%;
-      overflow-y: auto;
 
       &>[text] {
         padding: .5rem 1rem;
         font-size: 1rem;
-        overflow: hidden;
         transform-origin: bottom;
         border-radius: .3rem;
-        animation: grow var(--time);
+        animation: grow calc(var(--time) * 1.5);
+
+        &.closing {
+          animation: hide var(--time) both;
+        }
       }
     }
   }
@@ -358,10 +418,12 @@ export default { name: "gqp_notification" }
   @keyframes grow {
     0% {
       height: 0;
+      padding: 0;
+      transform: scale(1, 0);
     }
 
-    50% {
-      height: 2.5rem;
+    100% {
+      transform: scale(1, 1);
     }
   }
 }

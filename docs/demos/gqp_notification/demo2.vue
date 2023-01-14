@@ -22,21 +22,21 @@ onMounted(() => {
     </template>
   </gqp_notification>
   <div @click="notification({ text: '插槽文本优先级更高', time: -1, closeable: true })">
-    Click to show notification</div>
+    点击这里显示通知</div>
 </template>
-<style scoped>
+<style scoped lang="scss">
 [text][custom_1] {
   display: flex;
   align-items: center;
   color: rgb(0, 0, 0);
   background: orange;
-}
 
-svg {
-  width: 2em;
-  height: 2em;
-  display: inline-block;
-  margin: 0 .3em;
+  svg {
+    width: 2em;
+    height: 2em;
+    display: inline-block;
+    margin: 0 .3em;
+  }
 }
 
 [cover][custom_1] {

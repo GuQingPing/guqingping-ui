@@ -8,6 +8,6 @@ onMounted(() => {
 </script>
 <template>
   <gqp_notification ref="gqp_notification_ref"></gqp_notification>
-  <div @click="notification({ text: '一个响应式的全屏通知' })">
+  <div @click="notification({ text: '现在有进度条了', progress: true })">
     点击这里显示通知</div>
 </template>

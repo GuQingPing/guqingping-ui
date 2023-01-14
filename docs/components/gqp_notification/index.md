@@ -1,8 +1,10 @@
 <script setup>
   import d1 from "../../demos/gqp_notification/demo1.vue"
+  import d1_2 from "../../demos/gqp_notification/demo1_progress.vue"
   import d2 from "../../demos/gqp_notification/demo2.vue"
   import d3 from "../../demos/gqp_notification/demo3.vue"
   import d4 from "../../demos/gqp_notification/demo4.vue"
+  import d5 from "../../demos/gqp_notification/demo5.vue"
 </script>
 
 ## 基本用法
@@ -14,6 +16,17 @@
 <summary>查看代码</summary>
 
 <<< ./docs/demos/gqp_notification/demo1.vue
+</details>
+
+## 带上进度条
+<div class="btn">
+  <d1_2/>
+</div>
+
+<details>
+<summary>查看代码</summary>
+
+<<< ./docs/demos/gqp_notification/demo1_progress.vue
 </details>
 
 ## 自定义全屏通知
@@ -39,15 +52,24 @@
 
 ## 自定义列表通知
 
-开发中...
-<!-- <div class="btn">
+<div class="btn">
   <d4/>
 </div>
 <details>
 <summary>查看代码</summary>
 
 <<< ./docs/demos/gqp_notification/demo4.vue
-</details> -->
+</details>
+
+## 带进度条的自定义列表通知
+<div class="btn">
+  <d5/>
+</div>
+<details>
+<summary>查看代码</summary>
+
+<<< ./docs/demos/gqp_notification/demo5.vue
+</details>
 
 ## 全局修改组件样式
 ```vue
@@ -73,6 +95,7 @@
 | time      | 显示时间/S                                    | number  | 1.5              | -1无限 |
 | position  | 显示位置<br>九宫格<br>1 2 3<br>4 5 6<br>7 8 9 | number  | 5                |        |
 | list      | 列表式通知                                    | boolean | false            |        |
+| progress  | 显示进度条                                    | boolean | false            |        |
 
 ## 预定义的插槽
 | 写法     | 作用           |
@@ -85,8 +108,3 @@
 | -------- | ---------- | ------------------ |
 | 默认     | [text]     | 应用默认样式       |
 | #cover   | [cover]    | 应用默认的遮罩样式 |
-
-## 组件更新
-- 这个组件还未开发完成，待开发项如下
-  - 为 增删 列表通知 增加过渡
-  - 自定义列表通知
