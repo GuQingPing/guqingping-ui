@@ -1,7 +1,7 @@
 <script setup>
 import { ref, toRaw } from 'vue'
 //状态对象
-let notification_obj = ref({
+const notification_obj = ref({
   text: "",
   show: false,
   init: true,
@@ -22,7 +22,7 @@ let notification_obj = ref({
   },
 })
 //位置九宫格
-let position_arr = [
+const position_arr = [
   "top_left reverse",
   "top_center reverse",
   "top_right reverse",
@@ -49,8 +49,8 @@ let notification = function (params = toRaw(NOV.default_config)) {
   }
 
   if (NOV.list_model = params.list) {//列表 添加
-    let now_index = NOV.temp_index / 1
-    let timeoutIndex = setTimeout(() => {
+    const now_index = NOV.temp_index / 1
+    const timeoutIndex = setTimeout(() => {
       list_remove(now_index)
     }, params.time < 0 ? 1000 : params.time * 1000)
     NOV.lists.push({
@@ -85,9 +85,9 @@ let close = function () {
 //删除列表通知方法
 let list_remove = function (i) {
   if (!NOV.list_model) return
-  let targetIndex = NOV.lists.findIndex(x => x.index === i)
+  const targetIndex = NOV.lists.findIndex(x => x.index === i)
   if (targetIndex < 0) return
-  let target = NOV.lists[targetIndex]
+  const target = NOV.lists[targetIndex]
   if (target.closeable && !target.closing) {
     console.log("list_remove", i, NOV.list_model ? "list" : "single", NOV.lists)
     clearTimeout(target.timeoutIndex)
@@ -113,7 +113,7 @@ let clear = function () {
 //暴露方法
 defineExpose({ notification, close, list_remove, clear })
 //传参
-let props = defineProps({//带类型和默认值的写法
+const props = defineProps({//带类型和默认值的写法
   type: {
     type: Number,
     default: 5

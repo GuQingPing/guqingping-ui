@@ -3,6 +3,8 @@ import './custom.css'                         //导入自定义样式
 
 // import guqingping_ui from '../../../packages' //导入项目当前组件库
 
+// import guqingping_ui from '../../../dist/guqingping-ui.mjs'   //生产文件 导入组件
+
 import guqingping_ui from 'guqingping-ui'     //包 导入组件
 import "guqingping-ui/css"                    //包 导入(全部)样式
 

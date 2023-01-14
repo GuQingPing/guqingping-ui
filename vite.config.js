@@ -1,7 +1,7 @@
 
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
-// import viteCompression from 'vite-plugin-compression'//gzip 库模式不支持
+// import viteCompression from 'vite-plugin-compression'//gzip
 
 
 // https://vitejs.dev/config/
