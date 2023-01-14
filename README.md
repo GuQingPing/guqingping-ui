@@ -8,16 +8,31 @@ npm i guqingping-ui
 ```
 
 ## Import
-```sh
+### Import All Use All
+```js
+//main.js
+import App from './App.vue'
+const app = createApp(App)
+
+import guqingping_ui from 'guqingping-ui'
+import "guqingping-ui/css"
+app.use(guqingping_ui)
+
+app.mount('#app')
+```
+
+### Import All Use Part
+```js
+//main.js
+import "guqingping-ui/css"
+
+//component.vue
 import { gqp_notification } from "guqingping-ui"
 ```
-## Components List
-- gpq_notification
 
 ## Usage
 ```js
 import { gqp_notification } from "guqingping-ui"
-import "guqingping-ui/css"//you can import style in main.js
 import { ref, onMounted, getCurrentInstance } from "vue"
 const notification = ref(function () { console.log("Function replace failed") })
 onMounted(() => {
