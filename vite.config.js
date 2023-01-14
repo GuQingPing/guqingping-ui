@@ -1,14 +1,14 @@
 
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
-import viteCompression from 'vite-plugin-compression'//gzip
+// import viteCompression from 'vite-plugin-compression'//gzip 库模式不支持
 
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
     vue(),
-    viteCompression(),
+    // viteCompression(),
   ],
   build: {
     rollupOptions: {
