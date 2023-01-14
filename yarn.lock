@@ -521,6 +521,16 @@ guqingping-ui@^0.0.23:
     vitepress "^1.0.0-alpha.36"
     vue "^3.2.45"
 
+guqingping-ui@^0.0.24:
+  version "0.0.24"
+  resolved "https://registry.npmjs.org/guqingping-ui/-/guqingping-ui-0.0.24.tgz#b49524f5ac40f7f39677c40ada363475941c5e88"
+  integrity sha512-XqlMH559AG0DLl8kVxbk2p3AIO+X7dxFxXb4349Mt6gzgdS+RZE4t7fEuEaT9fJ0hq6p46R6fSsdN2DSIOO7iw==
+  dependencies:
+    guqingping-ui "^0.0.23"
+    sass "^1.57.1"
+    vitepress "^1.0.0-alpha.36"
+    vue "^3.2.45"
+
 has@^1.0.3:
   version "1.0.3"
   resolved "https://registry.npmjs.org/has/-/has-1.0.3.tgz"

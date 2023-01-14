@@ -1,7 +1,7 @@
 <script setup>
 import { ref, toRaw } from 'vue'
 //状态对象
-const notification_obj = ref({
+let notification_obj = ref({
   text: "",
   show: false,
   init: true,
@@ -22,7 +22,7 @@ const notification_obj = ref({
   },
 })
 //位置九宫格
-const position_arr = [
+let position_arr = [
   "top_left reverse",
   "top_center reverse",
   "top_right reverse",
@@ -33,7 +33,7 @@ const position_arr = [
   "bottom_center",
   "bottom_right",
 ]
-const NOV = notification_obj.value
+let NOV = notification_obj.value
 //通知方法
 let notification = function (params = toRaw(NOV.default_config)) {
   NOV.init = false
@@ -49,8 +49,8 @@ let notification = function (params = toRaw(NOV.default_config)) {
   }
 
   if (NOV.list_model = params.list) {//列表 添加
-    const now_index = NOV.temp_index / 1
-    const timeoutIndex = setTimeout(() => {
+    let now_index = NOV.temp_index / 1
+    let timeoutIndex = setTimeout(() => {
       list_remove(now_index)
     }, params.time < 0 ? 1000 : params.time * 1000)
     NOV.lists.push({
@@ -85,9 +85,9 @@ let close = function () {
 //删除列表通知方法
 let list_remove = function (i) {
   if (!NOV.list_model) return
-  const targetIndex = NOV.lists.findIndex(x => x.index === i)
+  let targetIndex = NOV.lists.findIndex(x => x.index === i)
   if (targetIndex < 0) return
-  const target = NOV.lists[targetIndex]
+  let target = NOV.lists[targetIndex]
   if (target.closeable && !target.closing) {
     console.log("list_remove", i, NOV.list_model ? "list" : "single", NOV.lists)
     clearTimeout(target.timeoutIndex)
@@ -113,7 +113,7 @@ let clear = function () {
 //暴露方法
 defineExpose({ notification, close, list_remove, clear })
 //传参
-const props = defineProps({//带类型和默认值的写法
+let props = defineProps({//带类型和默认值的写法
   type: {
     type: Number,
     default: 5
