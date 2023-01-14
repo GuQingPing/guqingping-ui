@@ -124,32 +124,32 @@ const props = defineProps({//带类型和默认值的写法
 export default { name: "gqp_notification" }
 </script>
 <template>
-  <Teleport to="body">
-    <div :class="[
-      true ? 'gqp_notification_box' : '',//基础样式
-      true ? notification_obj.position : '',//位置
-      notification_obj.show ? 'show' : 'hide',
-      notification_obj.init ? 'init' : '',
-      notification_obj.list_model ? 'list_box' : '',
-    ]" @click="close" :style="'--time:' + notification_obj.trans_time + 's'">
+  <!-- <Teleport to="body"> -->
+  <div :class="[
+    true ? 'gqp_notification_box' : '',//基础样式
+    true ? notification_obj.position : '',//位置
+    notification_obj.show ? 'show' : 'hide',
+    notification_obj.init ? 'init' : '',
+    notification_obj.list_model ? 'list_box' : '',
+  ]" @click="close" :style="'--time:' + notification_obj.trans_time + 's'">
 
-      <div list>
-        <div text v-for="x in notification_obj.lists" :key="x.index" @click="list_remove(x.index)" :data-index="x.index"
-          :class="[
-            x.closeable ? 'clickable' : '',
-            x.progress ? 'progress' : '',
-            $slots?.default ? 'disable_default_style' : '',
-          ]" :style="'--progress_time:' + x.time + 's'">
-          <slot>
-            {{ x.text }}
-          </slot>
-        </div>
+    <div list>
+      <div text v-for="x in notification_obj.lists" :key="x.index" @click="list_remove(x.index)" :data-index="x.index"
+        :class="[
+          x.closeable ? 'clickable' : '',
+          x.progress ? 'progress' : '',
+          $slots?.default ? 'disable_default_style' : '',
+        ]" :style="'--progress_time:' + x.time + 's'">
+        <slot>
+          {{ x.text }}
+        </slot>
       </div>
-      <slot name="cover">
-        <div cover></div>
-      </slot>
     </div>
-  </Teleport>
+    <slot name="cover">
+      <div cover></div>
+    </slot>
+  </div>
+  <!-- </Teleport> -->
 </template>
 
 
