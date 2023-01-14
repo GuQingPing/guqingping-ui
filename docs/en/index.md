@@ -3,26 +3,26 @@ layout: home
  
 hero:
   name: GuQingPing UI
-  text: Vue3.2 响应式 定制化 组件库
-  tagline: 让一切简化
+  text: Vue3.2 Responsive Customized Component-Library
+  tagline: Simplify everything
   actions:
     - theme: brand
-      text: 开始
+      text: Start
       link: /guide/quickstart
     - theme: alt
-      text: 查看GitHub
+      text: View on GitHub
       link: https://github.com/vuejs/vitepress
  
 features:
   - icon: ⚡️
-    title: 快速
-    details: 文档示例，开箱即用，简洁语法，无需记忆繁琐配置
+    title: Quick
+    details: Document example, out-of-the-box, concise syntax, no need to remember complicated configuration
   - icon: 🖖
-    title: 响应式
-    details: 默认适配，内置样式关键词，减少适配工作量
+    title: Responsive
+    details: Default adaptation, built-in style keywords, reduce adaptation workload
   - icon: 🛠️
-    title: 定制化
-    details: 插槽，选择器，高度自定义的样式
+    title: Customized
+    details: Slot, selector, highly customized style
 ---
 <style lang="scss">
     :root {

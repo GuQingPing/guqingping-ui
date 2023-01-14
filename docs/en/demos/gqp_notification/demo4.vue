@@ -12,12 +12,12 @@ const positionIndex = ref(1)
   <gqp_notification ref="gqp_notification_ref">
     <div text custom_1>
       √&nbsp;
-      <span>你可以用插槽来显示自定义的内容</span>
+      <span>You can use slots to display customized content</span>
     </div>
     <template #cover>&nbsp;</template>
   </gqp_notification>
   <div @click="notification({ time: 5, closeable: true, list: true, position: positionIndex })">
-    点击这里显示通知 显示位置->[{{ positionIndex }}]
+    Click to show notification Position->[{{ positionIndex }}]
     <span v-for="x in (1, 9)" @click="positionIndex = x" style="background:#ccc;padding:.2em .6em;margin-right: .1em;">
       {{ x }}
     </span>
