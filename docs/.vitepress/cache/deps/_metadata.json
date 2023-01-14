@@ -1,13 +1,23 @@
 {
-  "hash": "7f154eee",
-  "browserHash": "5141b161",
+  "hash": "909e675b",
+  "browserHash": "29f5d1f4",
   "optimized": {
     "vue": {
       "src": "../../../../node_modules/vue/dist/vue.runtime.esm-bundler.js",
       "file": "vue.js",
-      "fileHash": "345da6da",
+      "fileHash": "06ec5a92",
       "needsInterop": false
+    },
+    "guqingping-ui": {
+      "src": "../../../../node_modules/guqingping-ui/dist/guqingping-ui.umd.js",
+      "file": "guqingping-ui.js",
+      "fileHash": "2a79d1dd",
+      "needsInterop": true
     }
   },
-  "chunks": {}
+  "chunks": {
+    "chunk-DQ3MAMZ7": {
+      "file": "chunk-DQ3MAMZ7.js"
+    }
+  }
 }
