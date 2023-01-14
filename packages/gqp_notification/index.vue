@@ -34,6 +34,40 @@ const position_arr = [
   "bottom_right",
 ]
 let NOV = notification_obj.value
+//关闭通知方法
+let close = function () {
+  if (!NOV.default_config.closeable || NOV.list_model) return
+  if (NOV.timer) clearTimeout(NOV.timer)
+  NOV.show = false
+}
+//检查数组状态
+let check_arr = function () {
+  if (NOV.lists.length > 0) return
+  NOV.temp_index = 0
+  NOV.show = false
+}
+let clear = function () {
+  NOV = []
+  NOV.temp_index = 0
+  NOV.show = false
+}
+//删除列表通知方法
+let list_remove = function (i) {
+  if (!NOV.list_model) return
+  const targetIndex = NOV.lists.findIndex(x => x.index === i)
+  if (targetIndex < 0) return
+  const target = NOV.lists[targetIndex]
+  if (target.closeable && !target.closing) {
+    console.log("list_remove", i, NOV.list_model ? "list" : "single", NOV.lists)
+    clearTimeout(target.timeoutIndex)
+    target.closing = true
+    document.querySelector(`.gqp_notification_box [text][data-index='${i}']`).classList.add("closing")
+    setTimeout(() => {
+      NOV.lists.splice(NOV.lists.findIndex(x => x.index === i), 1)
+      check_arr()
+    }, NOV.trans_time * 1000)
+  }
+}
 //通知方法
 let notification = function (params = toRaw(NOV.default_config)) {
   NOV.init = false
@@ -75,40 +109,6 @@ let notification = function (params = toRaw(NOV.default_config)) {
       NOV.show = false
     }, params.time * 1000)
   }
-}
-//关闭通知方法
-let close = function () {
-  if (!NOV.default_config.closeable || NOV.list_model) return
-  if (NOV.timer) clearTimeout(NOV.timer)
-  NOV.show = false
-}
-//删除列表通知方法
-let list_remove = function (i) {
-  if (!NOV.list_model) return
-  const targetIndex = NOV.lists.findIndex(x => x.index === i)
-  if (targetIndex < 0) return
-  const target = NOV.lists[targetIndex]
-  if (target.closeable && !target.closing) {
-    console.log("list_remove", i, NOV.list_model ? "list" : "single", NOV.lists)
-    clearTimeout(target.timeoutIndex)
-    target.closing = true
-    document.querySelector(`.gqp_notification_box [text][data-index='${i}']`).classList.add("closing")
-    setTimeout(() => {
-      NOV.lists.splice(NOV.lists.findIndex(x => x.index === i), 1)
-      check_arr()
-    }, NOV.trans_time * 1000)
-  }
-}
-//检查数组状态
-let check_arr = function () {
-  if (NOV.lists.length > 0) return
-  NOV.temp_index = 0
-  NOV.show = false
-}
-let clear = function () {
-  NOV = []
-  NOV.temp_index = 0
-  NOV.show = false
 }
 //暴露方法
 defineExpose({ notification, close, list_remove, clear })
