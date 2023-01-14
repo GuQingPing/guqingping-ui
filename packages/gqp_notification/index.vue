@@ -138,7 +138,7 @@ export default { name: "gqp_notification" }
           :class="[
             x.closeable ? 'clickable' : '',
             x.progress ? 'progress' : '',
-            $slots.default ? 'disable_default_style' : '',
+            $slots?.default ? 'disable_default_style' : '',
           ]" :style="'--progress_time:' + x.time + 's'">
           <slot>
             {{ x.text }}
