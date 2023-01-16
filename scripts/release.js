@@ -20,7 +20,7 @@ async function main() {
     // execSync(`git tag -a v${version} -m "v${version}"`, { stdio: 'inherit' })
     console.log(chalk.cyan(`release.js --------------- git 本地提交版本 v${version}`))
 
-    execSync(`git -c diff.mnemonicprefix=false -c core.quotepath=false --no-optional-locks push -v origin master:master`, { stdio: 'inherit' })
+    // execSync(`git -c diff.mnemonicprefix=false -c core.quotepath=false --no-optional-locks push -v origin master:master`, { stdio: 'inherit' })
     console.log(chalk.cyan(`release.js --------------- git 远端提交版本 v${version}`))
 
     const { yes } = await prompt({
@@ -35,6 +35,7 @@ async function main() {
       message: 'Select release type',
       choices: versionTypes
     })
+    console.log(targetVersionType)
 
     execSync(`npm version ${targetVersionType}`, { stdio: 'inherit' })
     const { yes2 } = await prompt({
