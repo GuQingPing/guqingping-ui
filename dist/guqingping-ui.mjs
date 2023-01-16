@@ -4,7 +4,7 @@ const y = (i, c) => {
   for (const [d, e] of c)
     s[d] = e;
   return s;
-}, O = (i) => ($("data-v-f0257b20"), i = i(), w(), i), j = { list: "" }, E = ["onClick", "data-index"], V = /* @__PURE__ */ O(() => /* @__PURE__ */ l("div", { cover: "" }, null, -1)), z = { name: "gqp_notification" }, B = /* @__PURE__ */ Object.assign(z, {
+}, O = (i) => ($("data-v-cd79f67f"), i = i(), w(), i), j = { list: "" }, E = ["onClick", "data-index"], V = /* @__PURE__ */ O(() => /* @__PURE__ */ l("div", { cover: "" }, null, -1)), z = { name: "gqp_notification" }, B = /* @__PURE__ */ Object.assign(z, {
   props: {
     //带类型和默认值的写法
     type: {
@@ -131,7 +131,7 @@ const y = (i, c) => {
       ])
     ], 6));
   }
-}), m = /* @__PURE__ */ y(B, [["__scopeId", "data-v-f0257b20"]]);
+}), m = /* @__PURE__ */ y(B, [["__scopeId", "data-v-cd79f67f"]]);
 m.install = (i) => i.component(m.name, m);
 const L = { name: "gqp_nav" }, D = (i) => ($("data-v-0a84edac"), i = i(), w(), i), F = {
   nav: "",

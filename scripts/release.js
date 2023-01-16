@@ -29,7 +29,6 @@ async function main() {
 
     execSync(`npm version ${targetVersionType}`, { stdio: 'inherit' })
     version = require('../package.json').version
-    console.log(chalk.cyan(`release.js --------------- npm仓库发布版本 v${version} [registry.npmjs.org]`))
     execSync('npm publish', { stdio: 'inherit' })
   } catch (e) {
     console.log(chalk.red(e.message))

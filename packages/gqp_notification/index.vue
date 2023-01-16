@@ -200,24 +200,6 @@ export default { name: "gqp_notification" }
     }
   }
 
-  @media only screen and (max-width:1023px) {
-    [list] {
-      min-width: 50%;
-    }
-  }
-
-  @media only screen and (max-width:769px) {
-    [list] {
-      min-width: 70%;
-    }
-  }
-
-  @media only screen and (max-width:461px) {
-    [list] {
-      min-width: 90%;
-    }
-  }
-
   :slotted([text]) {
     padding: 2rem 2rem;
     margin-bottom: .3rem;
@@ -292,7 +274,7 @@ export default { name: "gqp_notification" }
 
   &.list_box {
     position: fixed;
-    display: flex;
+    display: inline-flex;
     width: auto;
     height: auto;
 
@@ -317,6 +299,7 @@ export default { name: "gqp_notification" }
         &.closing {
           animation: hide var(--time) both;
         }
+
       }
     }
   }
@@ -335,6 +318,18 @@ export default { name: "gqp_notification" }
     [text]:last-child {
       margin-bottom: .3rem;
     }
+  }
+
+  &.top_center,
+  &.center,
+  &.bottom_center {
+    justify-content: center;
+  }
+
+  &.top_right,
+  &.center_right,
+  &.bottom_right {
+    justify-content: flex-end;
   }
 
   &.top_left {
@@ -424,6 +419,36 @@ export default { name: "gqp_notification" }
 
     100% {
       transform: scale(1, 1);
+    }
+  }
+
+  @media only screen and (max-width:1023px) {
+    &:not(.list_box) [list] {
+      width: 50%;
+    }
+
+    &.list_box {
+      max-width: 40%;
+    }
+  }
+
+  @media only screen and (max-width:769px) {
+    &:not(.list_box) [list] {
+      width: 70%;
+    }
+
+    &.list_box {
+      max-width: 50%;
+    }
+  }
+
+  @media only screen and (max-width:461px) {
+    &:not(.list_box) [list] {
+      width: 90%;
+    }
+
+    &.list_box {
+      max-width: 60%;
     }
   }
 }
