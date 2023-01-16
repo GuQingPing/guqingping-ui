@@ -17,7 +17,7 @@ async function main() {
     execSync('git add .', { stdio: 'inherit' })
     console.log(chalk.cyan("release.js --------------- git 添加暂存区"))
     execSync(`git commit -m "chore: release v${version}"`, { stdio: 'inherit' })
-    execSync(`git tag -a v${version} -m "v${version}"`, { stdio: 'inherit' })
+    // execSync(`git tag -a v${version} -m "v${version}"`, { stdio: 'inherit' })
     console.log(chalk.cyan(`release.js --------------- git 本地提交版本 v${version}`))
 
     execSync(`git -c diff.mnemonicprefix=false -c core.quotepath=false --no-optional-locks push -v origin master:master`, { stdio: 'inherit' })
@@ -27,7 +27,7 @@ async function main() {
       type: 'select',
       name: 'release',
       message: 'Select release type',
-      choices: versionIncrements.map(i => `${i} (${inc(i)})`).concat(['custom'])
+      choices: versionIncrements.map(i => `${i} (${inc(i)})`)//.concat(['custom'])
     })
     targetVersion = release.match(/\((.*)\)/)[1]
 
@@ -41,7 +41,7 @@ async function main() {
     execSync('npm publish', { cwd: pkgRoot, stdio: 'inherit' })
     console.log(chalk.cyan(`release.js --------------- npm仓库发布版本 v${version}`))
   } catch (e) {
-    throw e
+    console.log(chalk.red(e.message))
   }
 }
 main()
