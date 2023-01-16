@@ -15,7 +15,7 @@ const positionIndex = ref(1)
     </div>
     <template #cover>&nbsp;</template>
   </gqp_notification>
-  <div @click="notification({ time: -1, closeable: true, list: true, position: positionIndex, progress: true })">
+  <div @click="notification({ time: 5, closeable: true, list: true, position: positionIndex, progress: true })">
     Click to show notification Position->[{{ positionIndex }}]
     <span v-for="x in (1, 9)" @click="positionIndex = x" style="background:#ccc;padding:.2em .6em;margin-right: .1em;">
       {{ x }}
