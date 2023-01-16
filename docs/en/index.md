@@ -42,6 +42,14 @@ features:
   }
 }
 </style>
+<script setup>
+  import {onMounted} from 'vue'
+  onMounted(()=>{
+    let a=document.querySelector(".VPMenu a[href='/guqingping-ui/en/']")
+    a.click()
+    console.log(a?.innerText)
+  })
+</script>
 <!-- <div class="contact">
   <div>
     <h1>联系作者</h1>
