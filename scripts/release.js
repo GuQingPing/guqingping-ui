@@ -23,12 +23,12 @@ async function main() {
     execSync(`git -c diff.mnemonicprefix=false -c core.quotepath=false --no-optional-locks push -v origin master:master`, { stdio: 'inherit' })
     console.log(chalk.cyan(`release.js --------------- git 远端提交版本 v${version}`))
 
-    const { ULV } = await prompt({
+    const { yes } = await prompt({
       type: 'confirm',
       name: 'yes',
       message: `Update the library version?`
     })
-    if (!ULV) return
+    if (!yes) return
     const { targetVersionType } = await prompt({
       type: 'select',
       name: 'release',
