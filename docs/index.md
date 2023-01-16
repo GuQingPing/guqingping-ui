@@ -42,6 +42,15 @@ features:
   }
 }
 </style>
+<script setup>
+  import {onMounted} from 'vue'
+  
+  onMounted(()=>{
+    const getParameters = URL => JSON.parse(`{"${decodeURI(URL.split("?")[1]).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g, '":"')}"}` )
+    const {lang} = getParameters(location.href)
+    if(lang=="en") document.querySelector(".VPMenu a[href='/guqingping-ui/en/']").click()
+  })
+</script>
 <!-- <div class="contact">
   <div>
     <h1>联系作者</h1>

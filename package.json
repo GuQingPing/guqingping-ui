@@ -6,7 +6,7 @@
     "type ": "git",
     "url": "https://github.com/GuQingPing/guqingping-ui"
   },
-  "homepage": "https://guqingping.github.io/guqingping-ui/en/",
+  "homepage": "https://guqingping.github.io/guqingping-ui/?lang=en",
   "private": false,
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
