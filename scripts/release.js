@@ -20,6 +20,9 @@ async function main() {
     execSync(`git tag -a v${version} -m "v${version}"`, { stdio: 'inherit' })
     console.log(chalk.cyan(`release.js --------------- git 本地提交版本 v${version}`))
 
+    execSync(`git -c diff.mnemonicprefix=false -c core.quotepath=false --no-optional-locks push -v origin master:master`, { stdio: 'inherit' })
+    console.log(chalk.cyan(`release.js --------------- git 远端提交版本 v${version}`))
+
     const { release } = await prompt({
       type: 'select',
       name: 'release',
@@ -36,7 +39,7 @@ async function main() {
     if (!yes) return
 
     execSync('npm publish', { cwd: pkgRoot, stdio: 'inherit' })
-    console.log(chalk.cyan(`release.js --------------- npm发布版本 v${version}`))
+    console.log(chalk.cyan(`release.js --------------- npm仓库发布版本 v${version}`))
   } catch (e) {
     throw e
   }
