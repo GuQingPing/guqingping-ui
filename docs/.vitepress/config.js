@@ -6,7 +6,7 @@ module.exports = {
       title: "GuQingPing UI",
       description: "一个响应式 可定制的Vue3组件库",
     },
-    '/en/': {
+    '/en': {
       lang: "en-US",
       title: "GuQingPing UI",
       description: "A responsive and customizable Vue3 component library",
@@ -27,12 +27,12 @@ module.exports = {
     localeLinks: {
       items: [
         { text: "简体中文", link: "/" },
-        { text: "English", link: "/en/" }
+        { text: "English", link: "/en" }
       ]
     },
     locales: {
       "/": getChineseThemeConfig(),
-      "/en/": getEnglishThemeConfig()
+      "/en": getEnglishThemeConfig()
     },
   },
 }

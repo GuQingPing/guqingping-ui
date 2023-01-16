@@ -1,7 +1,7 @@
 const { execSync } = require('child_process')           //执行命令
 
 const versionTypes = ['patch', 'minor', 'major', 'return']//版本枚举
-const version = require('../package.json').version      //当前版本
+let version = require('../package.json').version          //当前版本
 
 const chalk = require('chalk')                          //带样式日志
 const { prompt } = require('enquirer')                  //命令行可视化prompt
@@ -28,6 +28,7 @@ async function main() {
     if (targetVersionType === "return") return
 
     execSync(`npm version ${targetVersionType}`, { stdio: 'inherit' })
+    version = require('../package.json').version
     console.log(chalk.cyan(`release.js --------------- npm仓库发布版本 v${version} [registry.npmjs.org]`))
     execSync('npm publish', { stdio: 'inherit' })
   } catch (e) {
