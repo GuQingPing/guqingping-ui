@@ -1,7 +1,7 @@
 const { execSync } = require('child_process')           //执行命令
 const args = require('minimist')(process.argv.slice(2)) //获取参数
 
-const versionIncrements = ['patch', 'minor', 'major']   //版本枚举
+const versionTypes = ['patch', 'minor', 'major']   //版本枚举
 const version = require('../package.json').version      //当前版本
 
 const chalk = require('chalk')                          //带样式日志
@@ -23,23 +23,28 @@ async function main() {
     execSync(`git -c diff.mnemonicprefix=false -c core.quotepath=false --no-optional-locks push -v origin master:master`, { stdio: 'inherit' })
     console.log(chalk.cyan(`release.js --------------- git 远端提交版本 v${version}`))
 
-    const { release } = await prompt({
+    const { ULV } = await prompt({
+      type: 'confirm',
+      name: 'yes',
+      message: `Update the library version?`
+    })
+    if (!ULV) return
+    const { targetVersionType } = await prompt({
       type: 'select',
       name: 'release',
       message: 'Select release type',
-      choices: versionIncrements.map(i => `${i} (${inc(i)})`)//.concat(['custom'])
+      choices: versionTypes
     })
-    targetVersion = release.match(/\((.*)\)/)[1]
 
-    const { yes } = await prompt({
+    execSync(`npm version ${targetVersionType}`, { stdio: 'inherit' })
+    const { yes2 } = await prompt({
       type: 'confirm',
       name: 'yes',
-      message: `Releasing v${targetVersion}. Confirm?`
+      message: `Releasing v${targetVersion} to [registry.npmjs.org]. Confirm?`
     })
-    if (!yes) return
-
-    execSync('npm publish', { cwd: pkgRoot, stdio: 'inherit' })
-    console.log(chalk.cyan(`release.js --------------- npm仓库发布版本 v${version}`))
+    if (!yes2) return
+    execSync('npm publish', { stdio: 'inherit' })
+    console.log(chalk.cyan(`release.js --------------- npm仓库发布版本 v${version} [registry.npmjs.org]`))
   } catch (e) {
     console.log(chalk.red(e.message))
   }
